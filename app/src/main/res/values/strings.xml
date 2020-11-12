@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AndroidExcersise</string>
+    <string name="error_while_getting_data">Error while getting data</string>
+    <string name="no_result_found">No result found</string>
 </resources>
