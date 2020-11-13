@@ -38,6 +38,9 @@ object ApiClient{
         return httpLoggingInterceptor
     }
 
+    /**
+     * Retrofit webservice api client which will have web service api methods
+     */
     interface ServicesApiInterface {
         @GET("/s/2iodh4vg0eortkl/facts.json")
         fun feeds(): Call<FeedResponse>

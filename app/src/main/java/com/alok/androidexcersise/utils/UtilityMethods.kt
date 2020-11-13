@@ -13,6 +13,10 @@ import java.util.concurrent.*
 class UtilityMethods{
 
     companion object{
+
+        /**
+         * Method to check the internet connection.
+         */
         fun isInternetConnected(): Boolean {
             var inetAddress: InetAddress? = null
             try {

@@ -88,10 +88,10 @@ class MainActivity : AppCompatActivity() {
         emptyLayout.visibility = View.GONE
         errorLayout.visibility = View.GONE
         noInternetLayout.visibility = View.GONE
-        swipeContainer.isRefreshing = false
         progressBar.visibility = View.GONE
         setToolbar(it.title)
         feedResponse = it
+        swipeContainer.isRefreshing = false
         it.rows?.let { it1 -> feedListAdapter.update(it1) }
     }
 
