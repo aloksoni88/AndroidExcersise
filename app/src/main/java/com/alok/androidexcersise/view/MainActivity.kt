@@ -11,8 +11,10 @@ import com.alok.androidexcersise.R
 import com.alok.androidexcersise.di.Injection
 import com.alok.androidexcersise.remotedatasource.FeedResponse
 import com.alok.androidexcersise.utils.Constants
+import com.alok.androidexcersise.utils.snack
 import com.alok.androidexcersise.view.adapter.FeedListAdapter
 import com.alok.androidexcersise.viewmodel.FeedViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.error_layout.*
 
@@ -89,6 +91,7 @@ class MainActivity : AppCompatActivity() {
         errorLayout.visibility = View.GONE
         noInternetLayout.visibility = View.GONE
         progressBar.visibility = View.GONE
+        feedListRecyclerView.visibility = View.VISIBLE
         setToolbar(it.title)
         feedResponse = it
         swipeContainer.isRefreshing = false
@@ -100,7 +103,11 @@ class MainActivity : AppCompatActivity() {
         progressBar.visibility = View.GONE
         emptyLayout.visibility = View.GONE
         errorLayout.visibility = View.GONE
-        noInternetLayout.visibility = View.VISIBLE
+        Log.d(TAG, "feedResponse : $feedResponse")
+        if(feedResponse == null) {
+            noInternetLayout.visibility = View.VISIBLE
+        }
+        noInternetLayout.snack(getString(R.string.no_internet_connection),Snackbar.LENGTH_LONG)
         swipeContainer.isRefreshing = false
     }
 
@@ -122,6 +129,8 @@ class MainActivity : AppCompatActivity() {
         noInternetLayout.visibility = View.GONE
         progressBar.visibility = View.GONE
         swipeContainer.isRefreshing = false
+        feedListRecyclerView.visibility = View.GONE
+        feedResponse = null
     }
 
     private val onErrorObserver = Observer<Any> {
@@ -130,9 +139,10 @@ class MainActivity : AppCompatActivity() {
         emptyLayout.visibility = View.GONE
         noInternetLayout.visibility = View.GONE
         progressBar.visibility = View.GONE
+        feedListRecyclerView.visibility = View.GONE
         swipeContainer.isRefreshing = false
         textViewError.text = "$it"
+        feedResponse = null
     }
-
 
 }

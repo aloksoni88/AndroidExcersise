@@ -20,7 +20,8 @@ class FeedRemoteDataSource(apiClient: ApiClient) : FeedDataSource {
         Log.d("API url ", "getFeeds: ${call?.request()?.url}")
         call?.enqueue(object : Callback<FeedResponse> {
             override fun onFailure(call: Call<FeedResponse>, t: Throwable) {
-                callback.onError(t.message)
+                Log.d("onFailure", "Error Msg ${t.message}")
+                callback.onError("Error while getting feeds")
             }
 
             override fun onResponse(call: Call<FeedResponse>, response: Response<FeedResponse>) {
