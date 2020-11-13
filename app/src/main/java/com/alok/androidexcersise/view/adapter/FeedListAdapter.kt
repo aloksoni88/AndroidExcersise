@@ -1,15 +1,16 @@
 package com.alok.androidexcersise.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.alok.androidexcersise.R
+import com.alok.androidexcersise.databinding.FeedListItemBinding
 import com.alok.androidexcersise.model.Feed
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.feed_list_item.view.*
+
 
 /**
  * Created by Alok Soni on 12/11/20.
@@ -19,9 +20,9 @@ class FeedListAdapter(private var feeds: List<Feed>) :
     RecyclerView.Adapter<FeedListAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.feed_list_item, parent, false)
-        return MyViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = FeedListItemBinding.inflate(inflater)
+        return MyViewHolder(binding)
     }
 
     override fun onBindViewHolder(viewHolder: MyViewHolder, position: Int) {
@@ -37,15 +38,21 @@ class FeedListAdapter(private var feeds: List<Feed>) :
         notifyDataSetChanged()
     }
 
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val textViewTitle: TextView = view.textviewTitle
-        private val textViewDesc: TextView = view.textviewDesc
-        private val imageView: ImageView = view.imageview
+    class MyViewHolder(val binding: FeedListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(feed: Feed) {
-            textViewTitle.text = feed.title
-            textViewDesc.text = feed.description
-            var imageURL = if(feed.imageHref != null) feed.imageHref.trim() else feed.imageHref
-            Glide.with(imageView.context).load(imageURL).into(imageView)
+            binding.feedItem = feed
+        }
+    }
+
+    companion object {
+        val TAG = FeedListAdapter::class.java.simpleName
+
+        @JvmStatic
+        @BindingAdapter("profileImage")
+        fun loadImage(imageView: ImageView, url: String?) {
+            val imageURL = if(url != null) url.trim().replace("http","https") else url
+            Log.d(TAG, "imageURL $imageURL")
+            Glide.with(imageView.context).load(imageURL).placeholder(R.drawable.ic_image_placeholder).into(imageView)
         }
     }
 }
