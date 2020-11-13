@@ -36,12 +36,17 @@ class MainActivity : AppCompatActivity() {
         feedViewModel.loadFeedList();
     }
 
+    private fun setToolbar(titleValue : String?){
+        titleValue?.let { supportActionBar?.title = titleValue }
+    }
+
     private fun setupViewModel(){
         feedViewModel = ViewModelProvider(this,Injection.getViewModelFactory()).get(FeedViewModel::class.java)
         feedViewModel.feeds.observe(this,onSuccessObserver)
         feedViewModel.onLoading.observe(this,onLoadingObserver)
         feedViewModel.isEmptyList.observe(this,onEmptyObserver)
         feedViewModel.onError.observe(this,onErrorObserver)
+        feedViewModel.isInternetConnected.observe(this,noInternetObserver)
     }
 
     private fun initView(){
@@ -54,7 +59,17 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "feed list ${it.rows}" )
         emptyLayout.visibility = View.GONE
         errorLayout.visibility = View.GONE
+        noInternetLayout.visibility = View.GONE
+        setToolbar(it.title)
         it.rows?.let { it1 -> feedListAdapter.update(it1) }
+    }
+
+    private val noInternetObserver = Observer<Boolean> {
+        Log.d(TAG, " No internet connected  $it")
+        progressBar.visibility = View.GONE
+        emptyLayout.visibility = View.GONE
+        errorLayout.visibility = View.GONE
+        noInternetLayout.visibility = View.VISIBLE
     }
 
     private val onLoadingObserver = Observer<Boolean> {
@@ -66,12 +81,14 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, " No result found  $it")
         emptyLayout.visibility = View.VISIBLE
         errorLayout.visibility = View.GONE
+        noInternetLayout.visibility = View.GONE
     }
 
     private val onErrorObserver = Observer<Any> {
         Log.d(TAG, " Error while getting feeds  $it")
         errorLayout.visibility = View.VISIBLE
         emptyLayout.visibility = View.GONE
+        noInternetLayout.visibility = View.GONE
         textViewError.text = "$it"
     }
 

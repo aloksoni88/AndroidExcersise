@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.alok.androidexcersise.remotedatasource.FeedResponse
 import com.alok.androidexcersise.remotedatasource.ResultCallback
 import com.alok.androidexcersise.model.FeedRepository
+import com.alok.androidexcersise.utils.UtilityMethods
 
 /**
  * Created by Alok Soni on 12/11/20.
@@ -24,24 +25,32 @@ class FeedViewModel(private val repository: FeedRepository) : ViewModel() {
     private val isEmpty = MutableLiveData<Boolean>()
     val isEmptyList: LiveData<Boolean> = isEmpty
 
+    private val isNetConnected = MutableLiveData<Boolean>()
+    val isInternetConnected: LiveData<Boolean> = isNetConnected
+
 
     fun loadFeedList() {
         isLoading.value = true
-        repository.getFeedsList(object : ResultCallback<FeedResponse> {
-            override fun onError(error: String?) {
-                isLoading.value = false
-                onResultError.value = error
-            }
-
-            override fun onSuccess(response: FeedResponse) {
-                isLoading.value = false
-                if (feedResponse == null) {
-                    isEmpty.value = true
-                } else {
-                    feedResponse.value = response
+        if(UtilityMethods.isInternetConnected()){
+            repository.getFeedsList(object : ResultCallback<FeedResponse> {
+                override fun onError(error: String?) {
+                    isLoading.value = false
+                    onResultError.value = error
                 }
-            }
-        })
+
+                override fun onSuccess(response: FeedResponse) {
+                    isLoading.value = false
+                    if (feedResponse == null) {
+                        isEmpty.value = true
+                    } else {
+                        feedResponse.value = response
+                    }
+                }
+            })
+        }else{
+            isNetConnected.value = false;
+            return
+        }
     }
 
 }
