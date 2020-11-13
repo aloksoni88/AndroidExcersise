@@ -38,6 +38,7 @@ class FeedListAdapter(private var feeds: List<Feed>) :
         notifyDataSetChanged()
     }
 
+
     class MyViewHolder(val binding: FeedListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(feed: Feed) {
             binding.feedItem = feed

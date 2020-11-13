@@ -9,5 +9,4 @@ import com.alok.androidexcersise.remotedatasource.ResultCallback
 
 interface FeedDataSource{
     fun getFeeds(callback: ResultCallback<FeedResponse>)
-    fun cancel()
 }

@@ -38,9 +38,4 @@ class FeedRemoteDataSource(apiClient: ApiClient) : FeedDataSource {
         })
     }
 
-    override fun cancel() {
-        call?.let {
-            it.cancel()
-        }
-    }
 }

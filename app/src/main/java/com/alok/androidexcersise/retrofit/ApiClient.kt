@@ -1,6 +1,7 @@
 package com.alok.androidexcersise.retrofit
 
 import com.alok.androidexcersise.remotedatasource.FeedResponse
+import com.alok.androidexcersise.utils.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -13,12 +14,11 @@ import retrofit2.http.GET
  */
 
 object ApiClient{
-    private const val BASE_URL = "https://dl.dropboxusercontent.com"
     private var servicesApiInterface: ServicesApiInterface? = null
 
     fun build(): ServicesApiInterface? {
         var builder: Retrofit.Builder = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
 
         var httpClient: OkHttpClient.Builder = OkHttpClient.Builder()

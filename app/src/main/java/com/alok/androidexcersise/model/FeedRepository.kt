@@ -12,8 +12,4 @@ class FeedRepository(private val feedDataSource: FeedDataSource) {
     fun getFeedsList(callback: ResultCallback<FeedResponse>) {
         feedDataSource.getFeeds(callback)
     }
-
-    fun cancel() {
-        feedDataSource.cancel()
-    }
 }

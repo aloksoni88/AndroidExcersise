@@ -15,10 +15,6 @@ object Injection{
     private val feedRepository = FeedRepository(feedDataSource)
     private val feedViewModelFactory = ViewModelFactory(feedRepository)
 
-    fun getRepository(): FeedDataSource {
-        return feedDataSource
-    }
-
     fun getViewModelFactory(): ViewModelProvider.Factory {
         return feedViewModelFactory
     }
