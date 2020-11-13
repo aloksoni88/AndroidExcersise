@@ -32,6 +32,7 @@ class FeedViewModel(private val repository: FeedRepository) : ViewModel() {
     fun loadFeedList() {
         isLoading.value = true
         if(UtilityMethods.isInternetConnected()){
+            isNetConnected.value = true
             repository.getFeedsList(object : ResultCallback<FeedResponse> {
                 override fun onError(error: String?) {
                     isLoading.value = false

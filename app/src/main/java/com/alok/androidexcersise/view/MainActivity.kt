@@ -100,15 +100,18 @@ class MainActivity : AppCompatActivity() {
 
     private val noInternetObserver = Observer<Boolean> {
         Log.d(TAG, " No internet connected  $it")
-        progressBar.visibility = View.GONE
-        emptyLayout.visibility = View.GONE
-        errorLayout.visibility = View.GONE
         Log.d(TAG, "feedResponse : $feedResponse")
-        if(feedResponse == null) {
-            noInternetLayout.visibility = View.VISIBLE
+        if(!it) {
+            progressBar.visibility = View.GONE
+            emptyLayout.visibility = View.GONE
+            errorLayout.visibility = View.GONE
+            swipeContainer.isRefreshing = false
+            noInternetLayout.snack(getString(R.string.no_internet_connection),Snackbar.LENGTH_LONG)
+            if(feedResponse == null){
+                noInternetLayout.visibility = View.VISIBLE
+            }
         }
-        noInternetLayout.snack(getString(R.string.no_internet_connection),Snackbar.LENGTH_LONG)
-        swipeContainer.isRefreshing = false
+
     }
 
     private val onLoadingObserver = Observer<Boolean> {
@@ -130,7 +133,6 @@ class MainActivity : AppCompatActivity() {
         progressBar.visibility = View.GONE
         swipeContainer.isRefreshing = false
         feedListRecyclerView.visibility = View.GONE
-        feedResponse = null
     }
 
     private val onErrorObserver = Observer<Any> {
@@ -142,7 +144,6 @@ class MainActivity : AppCompatActivity() {
         feedListRecyclerView.visibility = View.GONE
         swipeContainer.isRefreshing = false
         textViewError.text = "$it"
-        feedResponse = null
     }
 
 }
