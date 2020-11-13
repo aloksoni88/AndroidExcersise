@@ -9,10 +9,10 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="4dp"
-        app:contentPadding="8dp"
+        android:layout_margin="@dimen/screen_margin"
+        app:cardCornerRadius="@dimen/cardview_corner_radious"
+        app:cardElevation="@dimen/cardview_elevation"
+        app:contentPadding="@dimen/padding"
         app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,8 +23,8 @@
                 android:id="@+id/textviewTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:textSize="18sp"
+                android:layout_marginBottom="@dimen/padding"
+                android:textSize="@dimen/textsize_large"
                 android:textColor="@android:color/holo_blue_dark"
                 android:fontFamily="sans-serif-medium"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -32,7 +32,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
-                tools:text="@{feedItem.title}" />
+                android:text="@{feedItem.title,default=`Title`}" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -46,19 +46,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/textsize_small"
                     android:singleLine="false"
                     android:layout_toLeftOf="@+id/imageview"
                     android:textColor="@android:color/black"
-                    tools:text="@{feedItem.description}" />
+                    android:text="@{feedItem.description,default=`Description`}" />
 
                 <ImageView
                     android:layout_alignParentRight="true"
                     android:id="@+id/imageview"
-                    android:layout_width="120dp"
-                    android:layout_height="80dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_width="@dimen/image_width"
+                    android:layout_height="@dimen/image_height"
+                    android:layout_marginLeft="@dimen/padding"
+                    android:layout_marginStart="@dimen/padding"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     app:profileImage="@{feedItem.imageHref}"
